@@ -138,6 +138,8 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
     private final TimerHandler mTimerHandler;
     private final int mLanguageOnSpacebarHorizontalMargin;
 
+    private DataHarvester mHarvester;
+
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
     }
@@ -211,6 +213,8 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
 
         mLanguageOnSpacebarHorizontalMargin = (int)getResources().getDimension(
                 R.dimen.config_language_on_spacebar_horizontal_margin);
+
+        mHarvester = new DataHarvester(getContext());
     }
 
     private ObjectAnimator loadObjectAnimator(final int resId, final Object target) {
@@ -505,10 +509,15 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
-        Log.d("Sebug", "["+MotionEvent.actionToString(event.getAction())+"] [X:" + event.getX() + "] [Y:" + event.getY() + "] [Pressure:" + event.getPressure() + "]" + "[Xprecision:" + event.getXPrecision() + "] [Yprecision:" + event.getYPrecision() + "]");
+
         if (getKeyboard() == null) {
             return false;
         }
+
+        // Save event 
+        String line = mHarvester.keyEventToString(event);
+        mHarvester.writeLineToFile(line);
+
         if (mNonDistinctMultitouchHelper != null) {
             if (event.getPointerCount() > 1 && mTimerHandler.isInKeyRepeat()) {
                 // Key repeating timer will be canceled if 2 or more keys are in action.
