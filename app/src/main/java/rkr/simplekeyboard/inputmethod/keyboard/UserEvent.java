@@ -80,7 +80,7 @@ public class UserEvent {
         }
 
         result = sb.deleteCharAt(sb.length() - 1).toString();
-        result = sb.insert(-1, "\n").toString();
+        result = sb.append( "\n").toString();
         return result;
     }
 }
