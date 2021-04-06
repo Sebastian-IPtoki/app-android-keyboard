@@ -33,6 +33,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.FileNotFoundException;
 import java.util.WeakHashMap;
 
 import rkr.simplekeyboard.inputmethod.R;
@@ -515,8 +516,7 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
         }
 
         // Save event
-        String line = mHarvester.keyEventToString(event);
-        mHarvester.writeLineToFile(line);
+        mHarvester.addEvent(event);
 
         if (mNonDistinctMultitouchHelper != null) {
             if (event.getPointerCount() > 1 && mTimerHandler.isInKeyRepeat()) {
